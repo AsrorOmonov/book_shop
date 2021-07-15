@@ -1,0 +1,24 @@
+<div class="row my-3">
+    <div class="col-lg-7 offset-lg-5">
+        <form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <input class="form-control" value="{{ request.GET.q }}" type="text" name="q">
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-success w-100" type="submit">Search</button>
+                </div>
+                <div class="col-lg-2">
+                    <a href="{% url 'books:create' %}">
+                        <button class="btn btn-primary w-100" type="button">Create</button>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a href="{% url 'auth_logout' %}">
+                        <button class="btn btn-info w-100">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

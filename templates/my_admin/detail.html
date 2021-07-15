@@ -1,0 +1,20 @@
+{% extends 'layouts/my_admin_base.html' %}
+
+{% block content %}
+
+    <div class="card">
+        {% if object.cover %}
+            <img src="{{ object.cover.url }}">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ object.title }}</h5>
+            <p>{{ object.summary|safe }}</p>
+        </div>
+    </div>
+    {#safe --> reads harmful thing within a safe conditions#}
+    {#    <h1>{{ object.title }}</h1>#}
+    {#    {% if object.cover %}#}
+    {#        <img src="{{ object.cover.url }}">#}
+    {#    {% endif %}#}
+    {#    <h3>{{ object.summary }}</h3>#}
+{% endblock %}

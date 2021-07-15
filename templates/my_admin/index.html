@@ -1,0 +1,50 @@
+{% extends 'layouts/my_admin_base.html' %}
+{% load admin_tags %}
+
+{% block content %}
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Genre</th>
+            <th>Created_at</th>
+            <th>Actions</th>
+        </tr>
+        {% for book in object_list %}
+
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author.name }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>
+                    <ul>
+                        {% for genre in book.genres.all %}
+                            <li>{{ genre.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ book.created_at|date:'d-m-Y H:i' }}</td>
+                <td>
+                    <div class="d-flex justify-content-around">
+                        <a href="{% url 'books:detail' pk=book.pk %}"> <i class="fa fa-eye"></i>
+                        </a>
+
+                        <a href="{% url 'books:update' pk=book.pk %}">
+                            <i class="fa fa-pencil-alt text-warning"></i>
+                        </a>
+                        {# here down below should be reviewed#}
+                        <form onsubmit="return confirm('R u sure ?')" method="post"
+                              action="{% url 'books:delete' pk=book.pk %}">
+                            {% csrf_token %}
+                            <button style="border: none; background-color: white;" type="submit">
+                                <i class="fa fa-trash text-danger"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

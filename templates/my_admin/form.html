@@ -1,0 +1,22 @@
+{% extends 'layouts/my_admin_base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="col-lg-6 offset-lg-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <p>{{ field.label }}:</p>
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                    {{ field|add_class:'form-control' }}
+                </div>
+            {% endfor %}
+
+            <button class="btn btn-success float-md-end" type="submit">Save</button>
+        </form>
+    </div>
+{% endblock %}
+
