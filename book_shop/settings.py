@@ -1,9 +1,11 @@
 from pathlib import Path
+
+from decouple import config
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-1!9s85jlty*2r@$j(#znslvqe+9=tg6k71m)gxh%)^&91k&8&+'
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
@@ -65,10 +67,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'book_shop.wsgi.application'
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASS'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+
     }
+
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -143,3 +153,8 @@ LOGOUT_REDIRECT_URL = '/'
 THUMBNAIL_PROCESSORS = (
                            'image_cropping.thumbnail_processors.crop_corners',
                        ) + thumbnail_settings.THUMBNAIL_PROCESSORS
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
